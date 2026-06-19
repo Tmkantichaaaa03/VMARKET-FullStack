@@ -186,7 +186,7 @@ Web/API:
 
 
 
-<https://github.com/Tmkantichaaaa03/VMARKET-FullStack>
+`https://github.com/Tmkantichaaaa03/VMARKET-FullStack`
 
 
 
@@ -194,5 +194,5 @@ Game Client:
 
 
 
-<https://github.com/Tmkantichaaaa03/vmarket\_game>
+`https://github.com/Tmkantichaaaa03/vmarket\_game.git`
 
