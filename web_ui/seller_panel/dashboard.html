@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>แผงควบคุมร้านค้า - VMARKET</title>
+
+    <!-- CSS หลัก -->
+    <link rel="stylesheet" href="../seller_panel/css/dashboard.css">
+
+    <!-- icon -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/all.min.css">
+
+    <!-- alert -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <style>
+        /* ===== Navbar + Notification ===== */
+        .noti-container {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .noti-link {
+            font-size: 20px;
+            text-decoration: none;
+            position: relative;
+            cursor: pointer;
+            padding: 0 15px;
+        }
+
+        .badge {
+            position: absolute;
+            top: -2px;
+            right: 5px;
+            background-color: #ff4757;
+            color: white;
+            border-radius: 50%;
+            padding: 2px 6px;
+            font-size: 10px;
+            font-weight: bold;
+            border: 2px solid #fff;
+        }
+
+        .noti-dropdown {
+            display: none;
+            position: absolute;
+            right: 10px;
+            top: 50px;
+            width: 300px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+            z-index: 1000;
+            border: 1px solid #ddd;
+        }
+
+        .noti-header {
+            padding: 12px;
+            background: #f8f9fa;
+            border-bottom: 1px solid #eee;
+            font-weight: bold;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .noti-list {
+            max-height: 350px;
+            overflow-y: auto;
+        }
+
+        .noti-item {
+            padding: 12px;
+            border-bottom: 1px solid #f1f1f1;
+            cursor: pointer;
+        }
+
+        .noti-item:hover { background-color: #f1f2f6; }
+
+        .profile-link {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+        }
+
+        .nav-shop-name {
+            font-size: 14px;
+            max-width: 150px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        /* ปรับขนาดโลโก้ใน Navbar */
+        .nav-logo-img {
+            height: 120px; /* ปรับความสูงตามความเหมาะสม */
+            width: auto;  /* ให้ความกว้างปรับตามอัตราส่วนภาพ */
+            display: block;
+            object-fit: contain;
+            transition: transform 0.3s ease;
+        }
+
+        /* เพิ่มลูกเล่นตอนเอาเมาส์ไปชี้ (Optional) */
+        .nav-logo-img:hover {
+            transform: scale(1.05);
+        }
+
+        /* ปรับระยะขอบของโลโก้ถ้าจำเป็น */
+        .logo {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+        }
+    </style>
+</head>
+
+<body>
+
+<!-- 🔥 Navbar -->
+<div id="navbar"></div>
+
+<main class="content">
+    <div class="container wide">
+
+        <div class="action-group">
+            <a href="add_product.html" class="button pixel-text">
+                <i class="fas fa-plus-circle"></i> เพิ่มสินค้าใหม่
+            </a>
+        </div>
+
+        <h3>รายการสินค้าของฉัน</h3>
+
+        <div class="filter-tabs">
+            <button class="filter-btn active" onclick="filterStatus('all', this)">ทั้งหมด</button>
+            <button class="filter-btn" onclick="filterStatus('approved', this)">ขายอยู่</button>
+            <button class="filter-btn" onclick="filterStatus('pending', this)">รออนุมัติ</button>
+            <button class="filter-btn" onclick="filterStatus('rejected', this)">ถูกปฏิเสธ</button>
+        </div>
+
+        <div id="productGrid" class="product-grid"></div>
+        <p id="productMessage" class="message"></p>
+
+    </div>
+</main>
+
+<script>
+fetch("navbar.html")
+  .then(res => res.text())
+  .then(async data => {
+    document.getElementById("navbar").innerHTML = data;
+
+    // ✅ active menu
+    const currentPage = location.pathname.split("/").pop();
+    document.querySelectorAll(".nav-center a").forEach(link => {
+        if (link.getAttribute("href") === currentPage) {
+            link.classList.add("active");
+        }
+    });
+
+    // ✅ โหลดข้อมูลที่ต้องใช้ navbar
+    if (typeof displayShopName === "function") {
+        await displayShopName();
+    }
+
+    if (typeof fetchNotifications === "function") {
+        fetchNotifications();
+        setInterval(fetchNotifications, 60000);
+    }
+  });
+</script>
+
+<!-- script หลัก -->
+<script src="js/auth.js"></script>
+<script src="js/main.js"></script>
+
+<!-- logic หน้า -->
+<script>
+window.addEventListener('load', function () {
+    if (typeof checkAuth === "function") checkAuth();
+
+    if (typeof loadSellerProducts === "function") {
+        loadSellerProducts();
+    }
+});
+
+// dropdown noti
+function toggleNoti() {
+    const dropdown = document.getElementById('notiDropdown');
+    if (dropdown) {
+        dropdown.style.display =
+            (dropdown.style.display === 'block') ? 'none' : 'block';
+    }
+}
+
+window.onclick = function(event) {
+    if (!event.target.matches('.noti-link') &&
+        !event.target.closest('.noti-dropdown')) {
+
+        const dropdown = document.getElementById('notiDropdown');
+        if (dropdown) dropdown.style.display = 'none';
+    }
+}
+</script>
+
+</body>
+</html>

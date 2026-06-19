@@ -1,0 +1,154 @@
+/* ล้างค่า Default */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* พื้นหลังหน้าจอ */
+body {
+    background-color: #e2eff5;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* กล่องหลัก */
+.login-card {
+    display: flex;
+    width: 850px;
+    height: 500px; /* ปรับความสูงลงเล็กน้อยเพราะไม่มี Social แล้ว */
+    background-color: #fff;
+    border-radius: 40px;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+    overflow: hidden;
+}
+
+/* --- ฝั่งซ้าย สีฟ้า --- */
+.side-panel {
+    flex: 1.2;
+    background: linear-gradient(135deg, #42d1ff 0%, #00bcff 100%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    text-align: center;
+    border-radius: 0 180px 180px 0;
+    padding: 40px;
+}
+
+.side-content h1 {
+    font-size: 2.5rem;
+    margin-bottom: 10px;
+}
+
+.side-content p {
+    margin-bottom: 30px;
+    font-size: 0.95rem;
+    opacity: 0.9;
+}
+
+.btn-register-outline {
+    display: inline-block;
+    padding: 12px 45px;
+    border: 2px solid white;
+    border-radius: 30px;
+    color: white;
+    text-decoration: none;
+    font-weight: 600;
+    transition: 0.3s ease;
+}
+
+.btn-register-outline:hover {
+    background: white;
+    color: #00bcff;
+}
+
+/* --- ฝั่งขวา ฟอร์ม --- */
+.form-panel {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 60px 40px; /* เพิ่ม Padding บนล่าง */
+}
+
+.form-panel h2 {
+    font-size: 2rem;
+    color: #333;
+    margin-bottom: 30px;
+}
+
+.input-group {
+    width: 100%;
+    max-width: 300px;
+    position: relative;
+    margin-bottom: 15px;
+}
+
+.input-group i {
+    position: absolute;
+    left: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #aaa;
+}
+
+.input-group input {
+    width: 100%;
+    padding: 14px 15px 14px 45px;
+    background-color: #f4f4f4;
+    border: none;
+    border-radius: 10px;
+    outline: none;
+    font-size: 0.9rem;
+    transition: 0.3s;
+}
+
+.input-group input:focus {
+    background-color: #ebebeb;
+    box-shadow: inset 0 0 5px rgba(0,0,0,0.05);
+}
+
+.forgot-link {
+    display: block;
+    width: 100%;
+    text-align: center;
+    font-size: 0.8rem;
+    color: #888;
+    text-decoration: none;
+    margin: 10px 0 25px 0;
+}
+
+.forgot-link:hover {
+    color: #555;
+    text-decoration: underline;
+}
+
+.btn-login-submit {
+    width: 100%;
+    max-width: 300px;
+    padding: 14px;
+    background: linear-gradient(to right, #243b55, #141e30);
+    color: white;
+    border: none;
+    border-radius: 30px;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s ease;
+}
+
+.btn-login-submit:hover {
+    transform: scale(1.02);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+}
+
+.message {
+    margin-top: 15px;
+    font-size: 0.85rem;
+    text-align: center;
+}

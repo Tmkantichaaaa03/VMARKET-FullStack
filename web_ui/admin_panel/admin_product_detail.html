@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ตรวจสอบสินค้า - VMARKET ADMIN</title>
+    <link rel="stylesheet" href="../admin_panel/css/admin_product_detail.css">
+</head>
+<body>
+    <nav class="top-menu">
+        <div class="nav-container">
+            <div class="nav-left">
+                <a href="admin_home.html" class="logo">
+                   
+            </div>
+            <div class="nav-center">
+
+            </div>
+            <div class="nav-right">
+                <a href="#" onclick="logout()" class="icon-btn logout-btn">
+                    
+                </a>
+            </div>
+        </div>
+    </nav>
+
+<div class="container" id="admin-dashboard-detail" style="display: none;">
+    <div class="header-section">
+        <div class="stats-badge">Product Review Mode</div>
+        <h2 id="productName">กำลังโหลด...</h2>
+    </div>
+
+    <div id="detailMessage" class="message">กำลังโหลดข้อมูลสินค้า...</div>
+
+    <div class="product-layout">
+        <div class="product-visuals">
+            <div class="main-image-wrapper">
+                <img id="productImage" src="" alt="Main Product Image" style="display: none;">
+            </div>
+            <div class="gallery-label">รูปภาพเพิ่มเติม</div>
+            <div id="detailImageList" class="image-gallery"></div>
+        </div>
+
+        <div class="product-info-sheet">
+            <div class="info-group">
+                <span class="label">สถานะการตรวจสอบ</span>
+                <span id="detailApprovalStatus" class="status-pill"></span>
+            </div>
+            
+            <div class="info-group">
+                <span class="label">ราคาจำหน่าย</span>
+                <div class="price-tag"><span id="detailPrice">0.00</span> <small>บาท</small></div>
+            </div>
+
+            <div class="info-grid">
+                <div class="info-item">
+                    <span class="label">รหัสสินค้า</span>
+                    <span id="detailProductId" class="value">-</span>
+                </div>
+                <div class="info-item">
+                    <span class="label">รหัสผู้ขาย</span>
+                    <span id="detailSellerId" class="value">-</span>
+                </div>
+                <div class="info-item">
+                    <span class="label">จำนวนคงเหลือ</span>
+                    <span id="detailStock" class="value">-</span>
+                </div>
+            </div>
+
+            <div class="description-area">
+                <span class="label">คำอธิบายสินค้า</span>
+                <p id="detailDescription" class="desc-text"></p>
+            </div>
+        </div>
+    </div>
+
+    <form id="adminActionForm">
+        <h3>ผลการพิจารณา</h3>
+        <div class="input-group">
+            <label>หมายเหตุถึงผู้ขาย (จะแสดงเมื่อมีการปฏิเสธ)</label>
+            <textarea id="adminNotes" rows="3" placeholder="ระบุเหตุผลหรือข้อเสนอแนะ..."></textarea>
+        </div>
+        
+        <div class="button-group">
+            <button type="button" class="btn-approve" onclick="handleApproval(document.getElementById('detailProductId').textContent, 'approved')">
+                <img src="../seller_panel/assets/images/check.png" style="width:18px; filter: brightness(0) invert(1);"> อนุมัติสินค้า
+            </button>
+            <button type="button" class="btn-reject" onclick="handleApproval(document.getElementById('detailProductId').textContent, 'rejected')">
+                ปฏิเสธการลงทะเบียน
+            </button>
+        </div>
+    </form>
+
+    <div class="footer-navigation">
+        <a href="admin_home.html" class="back-home-btn">
+            <span class="arrow">←</span> กลับสู่หน้าหลักการอนุมัติ
+        </a>
+    </div>
+</div>
+    <script src="js/admin.js"></script>
+</body>
+</html>

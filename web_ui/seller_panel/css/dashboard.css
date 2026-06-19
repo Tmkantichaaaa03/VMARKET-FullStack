@@ -1,0 +1,491 @@
+@import url('https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600;700&display=swap');
+
+* {
+    box-sizing: border-box;
+    font-family: 'Kanit', sans-serif;
+}
+
+
+body {
+    margin: 0;
+    /* แก้ไข Path ให้ถอยออกจาก css/ และ seller_panel/ เพื่อไปที่ assets/ */
+    background: linear-gradient(rgba(248, 246, 243, 0.8), rgba(241, 236, 231, 0.8)), 
+                url('../../assets/images/back.jpg');
+    
+    background-size: cover;          /* ปรับรูปให้เต็มหน้าจอ */
+    background-position: center;      /* จัดวางกึ่งกลาง */
+    background-attachment: fixed;     /* ล็อครูปไว้กับที่เมื่อเลื่อนหน้าจอ */
+    background-repeat: no-repeat;     /* ไม่ให้รูปซ้ำ */
+    
+    font-family: 'Kanit', sans-serif;
+    font-weight: 400;
+    color: #2d2d2d;
+}
+
+/* ===============================
+   PREMIUM NAVBAR
+================================ */
+
+.top-menu {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    height: 80px;
+    backdrop-filter: blur(12px);
+    background: rgba(243,240,236,0.85);
+    border-bottom: 1px solid rgba(168,139,118,0.25);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.05);
+    display: flex;
+    align-items: center;
+    z-index: 1000;
+}
+
+.nav-container {
+    max-width: 1150px;
+    width: 100%;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+/* Logo */
+
+.logo {
+    font-size: 20px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    color: #3e342d;
+}
+
+/* Center Menu */
+
+.nav-center {
+    display: flex;
+    gap: 45px;
+}
+
+.nav-center a {
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 500;
+    color: #6e5c50;
+    padding: 8px 16px;
+    border-radius: 30px;
+    transition: all 0.3s ease;
+}
+
+.nav-center a:hover {
+    background: rgba(168,139,118,0.15);
+    transform: translateY(-2px);
+}
+
+.nav-center a.active {
+    background: linear-gradient(135deg,#bfa38f,#a88b76);
+    color: #fff;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.1);
+}
+
+/* Right Icons */
+
+.nav-right {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+}
+
+/* Icon Buttons */
+
+.icon-btn,
+.noti-link {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: rgba(168,139,118,0.12);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    transition: 0.3s ease;
+    cursor: pointer;
+}
+
+.icon-btn img,
+.noti-link img {
+    width: 18px;
+    height: 18px;
+    object-fit: contain;
+}
+
+.icon-btn:hover,
+.noti-link:hover {
+    background: #b89a87;
+    transform: scale(1.1);
+}
+
+/* Logout darker */
+
+.logout-btn {
+    background: rgba(0,0,0,0.08);
+}
+
+.logout-btn:hover {
+    background: #3e342d;
+}
+
+
+.profile-link {
+    display: flex;
+    align-items: center;
+    gap: 12px; /* ระยะห่างระหว่างไอคอนกับชื่อร้าน */
+    text-decoration: none;
+    transition: 0.3s ease;
+    padding: 5px 10px;
+    border-radius: 30px;
+}
+
+.nav-shop-name {
+    font-size: 14px;
+    font-weight: 500;
+    color: #3e342d;
+    max-width: 150px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    /* ย้ายชื่อมาฝั่งขวาแล้ว ไม่ต้องตั้งค่า margin พิเศษ */
+}
+
+/* เอฟเฟกต์เมื่อเอาเมาส์ไปวาง */
+.profile-link:hover {
+    background: rgba(168, 139, 118, 0.1); /* ไฮไลท์พื้นหลังเบาๆ */
+}
+
+.profile-link:hover .nav-shop-name {
+    color: #b89a87;
+}
+/* Notification Badge */
+
+.badge {
+    position: absolute;
+    top: -4px;
+    right: -4px;
+    background: #3e342d;
+    color: #fff;
+    font-size: 10px;
+    padding: 4px 6px;
+    border-radius: 50%;
+    min-width: 18px;
+    text-align: center;
+}
+
+/* ===============================
+   CONTENT
+================================ */
+
+.content {
+    padding-top: 120px;
+}
+
+.container.wide {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* Headings */
+
+h2 {
+    font-size: 28px;
+    margin-bottom: 5px;
+}
+
+h3 {
+    font-size: 18px;
+    margin-top: 40px;
+    margin-bottom: 20px;
+    color: #6e5c50;
+}
+
+/* Buttons */
+
+.button {
+    background: #3e342d;
+    color: #fff;
+    padding: 12px 22px;
+    text-decoration: none;
+    font-size: 14px;
+    border-radius: 30px;
+    transition: 0.3s ease;
+    box-shadow: 0 4px 14px rgba(0,0,0,0.1);
+}
+
+.button:hover {
+    background: #000;
+    transform: translateY(-2px);
+}
+
+.btn-analytics {
+    background: #a88b76 !important;
+}
+
+.btn-analytics:hover {
+    background: #8f6d5d !important;
+}
+
+.filter-tabs {
+    display: flex;
+    gap: 12px;
+    margin: 25px 0;
+    padding-bottom: 10px;
+    border-bottom: 1px solid rgba(168, 139, 118, 0.1);
+}
+
+.filter-btn {
+    padding: 10px 24px;
+    border: none;
+    border-radius: 25px;
+    background: rgba(168, 139, 118, 0.1);
+    color: #6e5c50;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.filter-btn:hover {
+    background: rgba(168, 139, 118, 0.2);
+    transform: translateY(-1px);
+}
+
+.filter-btn.active {
+    background: #3e342d;
+    color: #fff;
+    box-shadow: 0 4px 12px rgba(62, 52, 45, 0.2);
+}
+/* Action Group */
+
+.action-group {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 30px;
+}
+
+/* ===============================
+   PRODUCT GRID
+================================ */
+
+.product-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 30px;
+}
+
+/* Product Card */
+
+.product-card {
+    background: #ffffff;
+    border-radius: 20px; /* เพิ่มความโค้งให้ดู Cozy ขึ้น */
+    overflow: hidden;
+    transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05); /* เงาพื้นฐานจางๆ */
+    position: relative;
+    border: 1px solid rgba(168, 139, 118, 0.05);
+}
+
+.product-card:hover {
+    transform: translateY(-10px); /* ให้ลอยขึ้นสูงกว่าเดิมนิดหน่อย */
+    box-shadow: 0 20px 40px rgba(62, 52, 45, 0.12); /* เงาเข้มขึ้นตอนลอย */
+}
+
+/* Image */
+
+.product-card img {
+    width: 100%;
+    height: 230px;
+    object-fit: cover;
+    transition: 0.4s ease;
+}
+
+.product-card:hover img {
+    transform: scale(1.05);
+}
+
+/* Card Content */
+
+.product-card-content {
+    padding: 20px;
+}
+
+/* Title */
+
+.product-card h4 {
+    margin: 0 0 10px 0;
+    font-size: 16px;
+    font-weight: 600;
+}
+
+/* Price */
+
+.product-price {
+    font-size: 18px;
+    font-weight: 600;
+    color: #3e342d;
+    margin-bottom: 6px;
+}
+
+/* Stock */
+
+.product-stock {
+    font-size: 13px;
+    color: #999;
+}
+
+/* Status */
+
+.product-status {
+    display: inline-flex;
+    align-items: center;
+    padding: 5px 14px;
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: 600;
+    margin-top: 12px;
+}
+
+/* สีสำหรับสถานะต่างๆ (ภาษาไทย) */
+.product-status.approved {
+    background: rgba(42, 157, 143, 0.12);
+    color: #238579;
+}
+.product-status.approved::before { content: "● วางจำหน่ายแล้ว"; }
+
+.product-status.pending {
+    background: rgba(233, 162, 59, 0.12);
+    color: #c98520;
+}
+.product-status.pending::before { content: "● รอการตรวจสอบ"; }
+
+.product-status.rejected {
+    background: rgba(230, 57, 70, 0.12);
+    color: #d62839;
+}
+.product-status.rejected::before { content: "● ถูกปฏิเสธ"; }
+/* Card Actions */
+
+.product-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 15px;
+}
+
+.product-actions button {
+    flex: 1;
+    padding: 8px;
+    border: none;
+    border-radius: 20px;
+    background: #f1ece7;
+    font-size: 13px;
+    transition: 0.3s ease;
+    cursor: pointer;
+}
+
+.product-actions button:hover {
+    background: #3e342d;
+    color: #fff;
+}
+
+/* ===============================
+   TABLE
+================================ */
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background: #fff;
+    border-radius: 14px;
+    overflow: hidden;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+}
+
+thead {
+    background: #3e342d;
+    color: #fff;
+}
+
+th, td {
+    padding: 15px;
+    text-align: center;
+    border-bottom: 1px solid #eee;
+}
+
+tbody tr:hover {
+    background: #f9f6f3;
+}
+
+/* ===============================
+   TYPOGRAPHY UPGRADE (ไม่กระทบโครงสร้างเดิม)
+================================ */
+
+/* หน้าใหญ่สุด */
+h2 {
+    font-weight: 700;
+    letter-spacing: 0.5px;
+}
+
+/* หัวข้อรอง */
+h3 {
+    font-weight: 500;
+}
+
+/* โลโก้ */
+.logo {
+    font-weight: 600;
+}
+
+/* เมนู navbar ให้บางลง */
+.nav-center a {
+    font-weight: 400;
+    letter-spacing: 0.3px;
+}
+
+/* เมนู active หนาขึ้น */
+.nav-center a.active {
+    font-weight: 600;
+}
+
+/* ชื่อสินค้า */
+.product-card h4 {
+    font-weight: 600;
+}
+
+/* ราคาเด่นที่สุด */
+.product-price {
+    font-weight: 700;
+    font-size: 20px;
+}
+
+/* stock บางสุด */
+.product-stock {
+    font-weight: 300;
+}
+
+/* ปุ่มหลัก */
+.button {
+    font-weight: 600;
+    letter-spacing: 0.5px;
+}
+
+/* ปุ่มในการ์ด */
+.product-actions button {
+    font-weight: 500;
+}
+
+/* หัวตาราง */
+thead {
+    font-weight: 600;
+}
+
+/* badge แจ้งเตือน */
+.badge {
+    font-weight: 600;
+}

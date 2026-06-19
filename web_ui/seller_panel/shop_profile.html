@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ตั้งค่าร้านค้า - Seller Panel</title>
+    <link rel="stylesheet" href="../seller_panel/css/dashboard.css"> 
+    <link rel="stylesheet" href="../seller_panel/css/shop_profile.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/all.min.css">
+     <style>
+        /* สไตล์เพิ่มเติมสำหรับระบบแจ้งเตือนและ Layout */
+        .noti-container {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .noti-link {
+            font-size: 20px;
+            text-decoration: none;
+            position: relative;
+            cursor: pointer;
+            padding: 0 15px;
+        }
+
+        .badge {
+            position: absolute;
+            top: -2px;
+            right: 5px;
+            background-color: #ff4757;
+            color: white;
+            border-radius: 50%;
+            padding: 2px 6px;
+            font-size: 10px;
+            font-family: sans-serif;
+            font-weight: bold;
+            border: 2px solid #fff;
+        }
+
+        .noti-dropdown {
+            display: none; 
+            position: absolute;
+            right: 10px;
+            top: 50px;
+            width: 300px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+            z-index: 1000;
+            border: 1px solid #ddd;
+        }
+
+        .noti-header {
+            padding: 12px;
+            background: #f8f9fa;
+            border-bottom: 1px solid #eee;
+            font-weight: bold;
+            color: #333;
+            border-radius: 8px 8px 0 0;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .noti-list {
+            max-height: 350px;
+            overflow-y: auto;
+        }
+
+        .noti-item {
+            padding: 12px;
+            border-bottom: 1px solid #f1f1f1;
+            cursor: pointer;
+            transition: background 0.2s;
+            text-align: left;
+            display: block;
+            text-decoration: none;
+            color: #333;
+        }
+
+        .noti-item:hover { background-color: #f1f2f6; }
+        .noti-item.unread { background-color: #e3f2fd; }
+        .noti-item strong { display: block; color: #2c3e50; font-size: 14px; }
+        .noti-item p { margin: 5px 0; font-size: 13px; color: #666; }
+        .noti-item small { color: #999; font-size: 11px; }
+
+        .empty-noti { padding: 20px; text-align: center; color: #999; }
+        
+        /* สไตล์สำหรับชื่อร้านใน Navbar */
+        .profile-link {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+            transition: 0.3s ease;
+        }
+
+        .nav-shop-name {
+            font-size: 14px;
+            font-weight: 500;
+            color: #3e342d;
+            max-width: 150px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .profile-link:hover .nav-shop-name {
+            color: #b89a87;
+        }
+
+                /* ปรับขนาดโลโก้ใน Navbar */
+        .nav-logo-img {
+            height: 120px; /* ปรับความสูงตามความเหมาะสม */
+            width: auto;  /* ให้ความกว้างปรับตามอัตราส่วนภาพ */
+            display: block;
+            object-fit: contain;
+            transition: transform 0.3s ease;
+        }
+
+        /* เพิ่มลูกเล่นตอนเอาเมาส์ไปชี้ (Optional) */
+        .nav-logo-img:hover {
+            transform: scale(1.05);
+        }
+
+        /* ปรับระยะขอบของโลโก้ถ้าจำเป็น */
+        .logo {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+    <div id="navbar"></div>
+
+    <div class="profile-container">
+        <h2 class="pixel-text">โปรไฟล์ร้านค้า</h2>
+        <hr>
+        
+        <form id="shopProfileForm">
+            <div class="preview-container">
+                <img id="profilePreview" src="../assets/images/default-shop.png" class="preview-img">
+                
+                <br>
+                <button type="button" id="btnChangePhoto" 
+                        style="display: none; margin-top: 10px; background: #b89a87; color: white; border: none; padding: 8px 15px; border-radius: 5px; cursor: pointer; font-family: 'Kanit', sans-serif;"
+                        onclick="document.getElementById('shopImage').click()">
+                    <i class="fas fa-image"></i> เปลี่ยนรูปโปรไฟล์
+                </button>
+
+                <input type="file" id="shopImage" name="profile_image" accept="image/*" style="display: none;">
+            </div>
+
+            <div class="form-group">
+                <label>ชื่อร้านค้า</label>
+                <input type="text" id="shopName" name="shop_name" required disabled>
+            </div>
+
+            <div class="form-group">
+                <label>เบอร์โทรศัพท์</label>
+                <input type="text" id="shopPhone" name="phone_number" disabled>
+            </div>
+
+            <div class="form-group">
+                <label>ที่อยู่</label>
+                <textarea id="shopAddress" name="address" rows="2" disabled></textarea>
+            </div>
+
+            <div style="display: flex; gap: 10px;">
+                <div class="form-group" style="flex: 1;">
+                    <label>จังหวัด</label>
+                    <input type="text" id="shopCity" name="city" disabled>
+                </div>
+                <div class="form-group" style="flex: 1;">
+                    <label>รหัสไปรษณีย์</label>
+                    <input type="text" id="shopPostalCode" name="postal_code" disabled>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>รายละเอียดร้านค้า</label>
+                <textarea id="shopDescription" name="description" rows="4" disabled></textarea>
+            </div>
+
+            <div class="form-group">
+                <label><i class="fas fa-tag"></i> ประเภทร้านค้า</label>
+                <div class="select-wrapper">
+                    <select id="shopType" name="shop_type" disabled>
+                        <option value="อาหาร">อาหาร</option>
+                        <option value="เครื่องแต่งกาย">เครื่องแต่งกาย</option>
+                        <option value="ผลไม้">ผลไม้</option>
+                    </select>
+                    <i class="fas fa-chevron-down arrow-down" style="display:none;"></i>
+                </div>
+            </div>
+
+            <div id="actionButtons" class="action-buttons">
+                <button type="button" id="btnEdit" onclick="toggleEditMode(true)" class="btn-main-edit">
+                    <i class="fas fa-edit"></i> แก้ไขข้อมูลร้านค้า
+                </button>
+                <div id="editControls" style="display: none; gap: 12px; width: 100%;">
+                    <button type="submit" id="btnSave" class="btn-main-save">
+                        <i class="fas fa-check"></i> ยืนยันการเปลี่ยนแปลง
+                    </button>
+                    <button type="button" id="btnCancel" onclick="toggleEditMode(false)" class="btn-main-cancel">
+                        ยกเลิก
+                    </button>
+                </div>
+            </div>
+            
+            <p id="profileMessage" style="margin-top: 10px; font-weight: bold;"></p>
+        </form>
+    </div>
+
+    <script>
+fetch("navbar.html")
+  .then(res => res.text())
+  .then(async data => {
+    document.getElementById("navbar").innerHTML = data;
+
+    // ✅ active menu
+    const currentPage = location.pathname.split("/").pop();
+    document.querySelectorAll(".nav-center a").forEach(link => {
+        if (link.getAttribute("href") === currentPage) {
+            link.classList.add("active");
+        }
+    });
+
+    // ✅ โหลดข้อมูลที่ต้องใช้ navbar
+    if (typeof displayShopName === "function") {
+        await displayShopName();
+    }
+
+    if (typeof fetchNotifications === "function") {
+        fetchNotifications();
+        setInterval(fetchNotifications, 60000);
+    }
+  });
+</script>
+
+    <script src="js/auth.js"></script>
+    <script src="js/main.js"></script>
+<script>
+    // เมื่อเปิดหน้าเว็บครั้งแรก
+    window.onload = function() {
+        if (typeof checkAuth === "function") checkAuth();
+        if (typeof loadShopProfile === "function") {
+            loadShopProfile(); 
+        }
+    };
+
+    // ฟังก์ชันสำหรับ Preview รูปภาพเมื่อเลือกไฟล์ (เขียนครั้งเดียวพอ)
+    document.getElementById('shopImage').onchange = function(evt) {
+        const [file] = this.files;
+        if (file) {
+            document.getElementById('profilePreview').src = URL.createObjectURL(file);
+        }
+    };
+
+    // ฟังก์ชันสลับโหมด แก้ไข / ดูอย่างเดียว
+    function toggleEditMode(isEdit) {
+        const form = document.getElementById('shopProfileForm');
+        const inputs = form.querySelectorAll('input, textarea, select');
+        const btnEdit = document.getElementById('btnEdit'); // ปุ่มแก้ไขหลัก
+        const editControls = document.getElementById('editControls'); // กลุ่มปุ่ม ยืนยัน/ยกเลิก
+        const btnChangePhoto = document.getElementById('btnChangePhoto'); // ปุ่มเปลี่ยนรูป
+        const profileImg = document.getElementById('profilePreview');
+
+        // เปิด-ปิดการกรอกข้อมูล
+        inputs.forEach(input => {
+            if (input.id !== 'shopImage') {
+                input.disabled = !isEdit;
+            }
+        });
+
+        if (isEdit) {
+            // --- เข้าสู่โหมดแก้ไข ---
+            btnEdit.style.display = 'none';            // ซ่อนปุ่มแก้ไข
+            editControls.style.display = 'flex';       // แสดงปุ่มยืนยัน/ยกเลิก
+            btnChangePhoto.style.display = 'inline-block'; // แสดงปุ่มเปลี่ยนรูป
+            profileImg.removeAttribute('title');       // ลบข้อความ toolti      // ทำให้รูปจางลงนิดนึงเพื่อให้รู้ว่ากำลังแก้
+        } else {
+            // --- กลับสู่โหมดดูปกติ ---
+            btnEdit.style.display = 'block';           // แสดงปุ่มแก้ไข
+            editControls.style.display = 'none';        // ซ่อนปุ่มยืนยัน/ยกเลิก
+            btnChangePhoto.style.display = 'none';      // ซ่อนปุ่มเปลี่ยนรูป
+            profileImg.style.opacity = "1";
+            
+            // รีโหลดข้อมูลใหม่จาก Database (เพื่อล้างค่าที่ User พิมพ์ค้างไว้แต่ไม่บันทึก)
+            if (typeof loadShopProfile === "function") loadShopProfile(); 
+        }
+    }
+</script>
+</body>
+</html>

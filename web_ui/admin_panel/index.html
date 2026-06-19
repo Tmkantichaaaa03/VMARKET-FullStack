@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Login - V-Market</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/index.css">
+</head>
+<body>
+
+    <div class="container" id="container">
+        
+        <div class="overlay-container" style="width: 50%; left: 0;">
+            <div class="overlay">
+                <div class="overlay-panel" style="opacity: 1;">
+                    <h1>VMARKET</h1>
+                    <p>ระบบจัดการหลังบ้าน</p>
+                    <div style="margin-top: 20px; border-top: 1px solid rgba(255,255,255,0.3); padding-top: 20px;">
+                        <small>Administrator Access Only<br>กรุณาติดต่อผู้ดูแลระบบหากลืมรหัสผ่าน</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-container" style="left: 50%; width: 50%;">
+            <form id="loginForm">
+                <h1 style="margin-bottom: 20px;">เข้าสู่ระบบ</h1>
+                
+                <div class="input-group">
+                    <i class="fas fa-user-shield"></i>
+                    <input type="text" id="loginUsername" placeholder="Username" value="admin" required />
+                </div>
+                
+                <div class="input-group">
+                    <i class="fas fa-lock"></i>
+                    <input type="password" id="loginPassword" placeholder="Password" value="password" required />
+                </div>
+
+                <button type="submit" class="btn-main">เข้าสู่ระบบ</button>
+                <div id="loginMessage" class="message"></div>
+            </form>
+        </div>
+
+    </div>
+
+    <script src="js/admin.js"></script>
+    <script>
+        window.onload = function() {
+            sessionStorage.removeItem('admin_auth');
+        };
+
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            if (typeof adminLogin === 'function') {
+                adminLogin();
+            } else {
+                alert('ไม่พบฟังก์ชัน adminLogin ใน admin.js');
+            }
+        });
+    </script>
+</body>
+</html>

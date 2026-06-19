@@ -1,0 +1,46 @@
+<nav class="top-menu">
+    <div class="nav-container">
+
+    <div class="nav-left">
+        <a href="dashboard.html" class="logo">
+            <img src="assets/images/logo (2).png" alt="VMARKET Logo" class="nav-logo-img">
+        </a>
+    </div>
+
+        <div class="nav-center">
+            <a href="dashboard.html">จัดการสินค้า</a>
+            <a href="orders.html">จัดการคำสั่งซื้อ</a>
+            <a href="analytics.html">วิเคราะห์การขาย</a>
+        </div>
+
+        <div class="nav-right">
+            <div class="noti-container">
+                <a href="javascript:void(0)" onclick="toggleNoti()" class="noti-link">
+                    <img src="assets/images/notification.png">
+                    <span id="notiCount" class="badge" style="display:none;">0</span>
+                </a>
+
+                <div id="notiDropdown" class="noti-dropdown">
+                    <div class="noti-header">
+                        <span>การแจ้งเตือน</span>
+                    </div>
+                    <div id="notiList" class="noti-list">
+                        <p class="empty-noti">กำลังโหลด...</p>
+                    </div>
+                </div>
+            </div>
+
+            <a href="shop_profile.html" class="profile-link">
+                <span id="navShopName" class="nav-shop-name">กำลังโหลด...</span>
+                <div class="icon-btn">
+                    <img src="assets/images/person.png">
+                </div>
+            </a>
+
+            <a href="#" onclick="logout()" class="icon-btn logout-btn">
+                <img src="assets/images/logout.png">
+            </a>
+        </div>
+
+    </div>
+</nav>

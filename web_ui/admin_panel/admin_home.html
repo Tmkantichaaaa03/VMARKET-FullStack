@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ระบบจัดการหลังบ้าน - รายการอนุมัติสินค้า</title>
+    <link rel="stylesheet" href="../admin_panel/css/admin_home.css">
+</head>
+<body>
+<nav class="top-menu">
+    <div class="nav-container">
+        <div class="nav-left">
+            <a href="admin_home.html" class="logo">
+                <img src="../seller_panel/assets/images/logo (2).png" alt="VMARKET Logo" class="nav-logo-img">
+            </a>
+        </div>
+
+        <div class="nav-center">
+            <span class="admin-title">แผงควบคุมผู้ดูแลระบบ</span>
+        </div>
+
+        <div class="nav-right">
+            <a href="#" onclick="logout()" class="icon-btn logout-btn">
+                <img src="../seller_panel/assets/images/logout.png" alt="Logout">
+            </a>
+        </div>
+    </div>
+</nav>
+
+    <div class="container" id="admin-dashboard">
+        <div class="header-section">
+            <h2>รายการรออนุมัติสินค้า</h2>
+            <div class="stats-badge">
+                ขณะนี้มีสินค้าที่รอการตรวจสอบทั้งหมด: <span id="pendingCount">0</span> รายการ
+            </div>
+        </div>
+
+        <div class="table-responsive">
+            <table id="pendingTable">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>ชื่อสินค้า</th>
+                        <th>ชื่อผู้ขาย</th>
+                        <th>ราคา (บาท)</th>
+                        <th>รายละเอียด</th>
+                        <th>การจัดการ</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    </tbody>
+            </table>
+        </div>
+
+        <p id="dashboardMessage" class="message"></p>
+    </div>
+
+    <script src="js/admin.js"></script>
+</body>
+</html>

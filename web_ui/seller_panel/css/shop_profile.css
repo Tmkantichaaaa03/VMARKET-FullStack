@@ -1,0 +1,257 @@
+/* =========================
+   GLOBAL BACKGROUND STYLE
+========================= */
+body {
+    background: linear-gradient(135deg, #f7f3ef, #fdfdfc);
+    font-family: 'Kanit', sans-serif;
+}
+
+/* =========================
+   MAIN CONTAINER (MODERN CARD)
+========================= */
+.profile-container {
+    max-width: 680px;
+    margin: 110px auto 60px;
+    padding: 38px 42px;
+
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(12px);
+
+    border-radius: 28px;
+    border: 1px solid rgba(200, 180, 160, 0.2);
+
+    box-shadow: 0 20px 60px rgba(0,0,0,0.08);
+
+    position: relative;
+    overflow: hidden;
+
+    transition: all 0.3s ease;
+}
+
+.profile-container:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 25px 70px rgba(0,0,0,0.12);
+}
+
+/* =========================
+   TITLE
+========================= */
+.profile-container h2 {
+    font-size: 22px;
+    font-weight: 600;
+    color: #3e342d;
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.profile-container hr {
+    border: none;
+    height: 1px;
+    background: linear-gradient(to right, transparent, #d8c3b2, transparent);
+    margin-bottom: 30px;
+}
+
+/* =========================
+   PROFILE IMAGE
+========================= */
+.preview-container {
+    position: relative;
+    width: 150px;
+    margin: 0 auto 30px;
+    text-align: center;
+}
+
+.preview-img {
+    width: 150px;
+    height: 150px;
+
+    border-radius: 40px;
+    object-fit: cover;
+
+    border: 4px solid white;
+    box-shadow: 0 10px 30px rgba(184,154,135,0.25);
+
+    transition: all 0.35s ease;
+}
+
+/* hover mode */
+.preview-img.editable {
+    cursor: pointer;
+    filter: brightness(0.95);
+}
+
+.preview-img.editable:hover {
+    transform: scale(1.06) rotate(1.5deg);
+    box-shadow: 0 15px 40px rgba(184,154,135,0.35);
+}
+
+/* =========================
+   FORM STYLE
+========================= */
+.form-group {
+    margin-bottom: 18px;
+}
+
+.form-group label {
+    font-size: 13px;
+    font-weight: 500;
+    color: #7a6454;
+    margin-bottom: 6px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.form-group input,
+.form-group textarea,
+.form-group select {
+    width: 100%;
+    padding: 13px 15px;
+
+    border-radius: 14px;
+    border: 1px solid #eee;
+
+    background: #fafafa;
+    font-size: 14px;
+    color: #444;
+
+    transition: all 0.25s ease;
+}
+
+/* focus effect (modern glow) */
+.form-group input:focus,
+.form-group textarea:focus,
+.form-group select:focus {
+    outline: none;
+    border-color: #b89a87;
+    background: #fff;
+
+    box-shadow: 0 0 0 4px rgba(184,154,135,0.15);
+}
+
+/* disabled state */
+.form-group input:disabled,
+.form-group textarea:disabled,
+.form-group select:disabled {
+    background: #f2f2f2;
+    color: #888;
+}
+
+/* =========================
+   ROW (CITY + ZIP)
+========================= */
+.form-row {
+    display: flex;
+    gap: 12px;
+}
+
+/* =========================
+   SELECT DROPDOWN
+========================= */
+.select-wrapper {
+    position: relative;
+}
+
+.arrow-down {
+    position: absolute;
+    right: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #b89a87;
+    pointer-events: none;
+}
+
+/* =========================
+   BUTTONS (MODERN STYLE)
+========================= */
+.action-buttons {
+    margin-top: 30px;
+    display: flex;
+    justify-content: center;
+}
+
+/* main edit */
+.btn-main-edit,
+.btn-main-save,
+.btn-main-cancel {
+    width: 100%;
+    padding: 14px;
+
+    border-radius: 14px;
+    border: none;
+
+    font-size: 14px;
+    font-weight: 500;
+
+    cursor: pointer;
+    transition: all 0.25s ease;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+/* edit */
+.btn-main-edit {
+    background: linear-gradient(135deg, #3e342d, #5a4a3f);
+    color: white;
+}
+
+.btn-main-edit:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+}
+
+/* save */
+.btn-main-save {
+    background: linear-gradient(135deg, #2ecc71, #27ae60);
+    color: white;
+}
+
+.btn-main-save:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 25px rgba(46,204,113,0.25);
+}
+
+/* cancel */
+.btn-main-cancel {
+    background: #f3f3f3;
+    color: #666;
+}
+
+.btn-main-cancel:hover {
+    background: #e9e9e9;
+}
+
+/* click animation */
+button:active {
+    transform: scale(0.97);
+}
+
+/* =========================
+   SMALL HINT TEXT
+========================= */
+#editPhotoHint {
+    margin-top: 8px;
+    font-size: 12px;
+    color: #888;
+}
+
+/* =========================
+   MOBILE RESPONSIVE
+========================= */
+@media (max-width: 768px) {
+    .profile-container {
+        margin: 90px 16px;
+        padding: 25px;
+    }
+
+    .form-row {
+        flex-direction: column;
+    }
+}
+#shopImage {
+    display: none;
+}
+

@@ -1,0 +1,115 @@
+<?php
+header('Content-Type: application/json');
+
+$host = "localhost";
+$user = "root";
+$pass = "";
+$db   = "virtual_marketplace";
+$conn = new mysqli($host, $user, $pass, $db);
+
+if ($conn->connect_error) {
+    die(json_encode(['status' => 'error', 'message' => 'Connection failed']));
+}
+
+$seller_id = isset($_GET['seller_id']) ? intval($_GET['seller_id']) : 0;
+$range = isset($_GET['range']) ? $_GET['range'] : '7days'; // รับค่าช่วงเวลาจาก JS
+
+if ($seller_id <= 0) {
+    echo json_encode(['status' => 'error', 'message' => 'Invalid or Missing Seller ID']);
+    exit;
+}
+
+$date_condition = "";
+$group_by = "DATE(o.created_at)";
+$date_format = "%d %b";
+
+switch ($range) {
+    case 'today':
+        $date_condition = "AND DATE(o.created_at) = CURDATE()";
+        $group_by = "HOUR(o.created_at)";
+        $date_format = "%H:00";
+        break;
+    case '30days':
+        $date_condition = "AND o.created_at >= DATE_SUB(CURDATE(), INTERVAL 29 DAY)";
+        $group_by = "DATE(o.created_at)";
+        $date_format = "%Y-%m-%d";
+        break;
+    case '1year':
+        $date_condition = "AND o.created_at >= DATE_SUB(CURDATE(), INTERVAL 1 YEAR)";
+        $group_by = "YEAR(o.created_at), MONTH(o.created_at)";
+        $date_format = "%b %Y"; 
+        break;
+    case '7days':
+    default:
+        $date_condition = "AND o.created_at >= DATE_SUB(CURDATE(), INTERVAL 6 DAY)";
+        $group_by = "DATE(o.created_at)";
+        $date_format = "%Y-%m-%d"; 
+        break;
+}
+
+// 1. คำนวณยอดขายรวมตามช่วงเวลาที่เลือก
+$sql_revenue = "SELECT SUM(oi.price * oi.quantity) as total 
+                FROM order_items oi
+                JOIN products p ON oi.product_id = p.product_id
+                JOIN orders o ON oi.order_id = o.order_id
+                WHERE p.seller_id = $seller_id 
+                $date_condition
+                AND o.status != 'cancelled'";
+$res_revenue = $conn->query($sql_revenue);
+$total_revenue = $res_revenue->fetch_assoc()['total'] ?? 0;
+
+// 2. คำนวณจำนวนออเดอร์ทั้งหมด (ของร้านค้านี้ ตั้งแต่เปิดร้าน)
+$sql_orders = "SELECT COUNT(DISTINCT oi.order_id) as count 
+               FROM order_items oi
+               JOIN products p ON oi.product_id = p.product_id
+               WHERE p.seller_id = $seller_id";
+$res_orders = $conn->query($sql_orders);
+$total_orders = $res_orders->fetch_assoc()['count'] ?? 0;
+
+// 3. ดึงข้อมูลกราฟเทรนด์ยอดขาย
+$sql_trend = "SELECT DATE_FORMAT(o.created_at, '$date_format') as label, SUM(oi.price * oi.quantity) as revenue 
+              FROM order_items oi
+              JOIN products p ON oi.product_id = p.product_id
+              JOIN orders o ON oi.order_id = o.order_id
+              WHERE p.seller_id = $seller_id 
+              $date_condition
+              AND o.status != 'cancelled'
+              GROUP BY $group_by
+              ORDER BY MIN(o.created_at) ASC";
+$res_trend = $conn->query($sql_trend);
+
+$chart_labels = [];
+$chart_data = [];
+while($row = $res_trend->fetch_assoc()) {
+    $chart_labels[] = $row['label'];
+    $chart_data[] = (float)$row['revenue'];
+}
+
+// 4. อันดับสินค้าขายดี (ตามช่วงเวลาที่เลือก)
+$sql_top = "SELECT p.name, SUM(oi.quantity) as total_sold, SUM(oi.price * oi.quantity) as revenue
+            FROM order_items oi
+            JOIN products p ON oi.product_id = p.product_id
+            JOIN orders o ON oi.order_id = o.order_id
+            WHERE p.seller_id = $seller_id
+            $date_condition
+            AND o.status != 'cancelled'
+            GROUP BY p.product_id
+            ORDER BY total_sold DESC LIMIT 5";
+$res_top = $conn->query($sql_top);
+$top_products = [];
+while($row = $res_top->fetch_assoc()) {
+    $top_products[] = $row;
+}
+
+// ส่งข้อมูลกลับไปยัง JavaScript
+echo json_encode([
+    'status' => 'success',
+    'today_revenue' => (float)$total_revenue,
+    'total_orders' => (int)$total_orders,
+    'chart_labels' => $chart_labels,
+    'chart_data' => $chart_data,
+    'top_products' => $top_products
+]);
+
+$conn->close();
+?>

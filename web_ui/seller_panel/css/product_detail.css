@@ -1,0 +1,481 @@
+/* ===============================
+   COLOR THEME
+=================================*/
+
+:root {
+    --primary-dark: #3e342d;
+    --accent-brown: #a88b76;
+    --soft-cream: #f8f6f3;
+    --white: #ffffff;
+    --red-cancel: #e63946;
+}
+
+/* ===============================
+   LAYOUT
+=================================*/
+
+.container.wide {
+    max-width: 1100px;
+    margin: 50px auto;
+}
+
+.product-detail-card {
+    background: var(--white);
+    border-radius: 20px;
+    padding: 50px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.06);
+    transition: 0.3s ease;
+}
+
+.product-detail-card:hover {
+    box-shadow: 0 30px 80px rgba(0,0,0,0.1);
+}
+
+.detail-layout {
+    display: grid;
+    grid-template-columns: 1fr 1.1fr;
+    gap: 60px;
+}
+
+/* ===============================
+   IMAGE SECTION
+=================================*/
+
+.main-image-container {
+    width: 100%;
+    height: 480px;
+    background: var(--soft-cream);
+    border-radius: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.main-image-container img {
+    max-width: 85%;
+    max-height: 85%;
+    object-fit: contain;
+    transition: 0.3s ease;
+}
+
+.main-image-container:hover img {
+    transform: scale(1.03);
+}
+
+#imageGallery {
+    display: flex;
+    gap: 10px;
+    margin-top: 15px;
+}
+
+#imageGallery img {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    cursor: pointer;
+    border-radius: 6px;
+    border: 2px solid transparent;
+    transition: 0.2s;
+}
+
+#imageGallery img:hover {
+    border: 2px solid #3e342d;
+    transform: scale(1.05);
+}
+
+
+.active-thumb {
+    border-color: var(--primary-dark);
+}
+
+/* ===============================
+   INFO SECTION
+=================================*/
+
+.prod-name-title {
+    font-size: 26px;
+    font-weight: 600;
+    margin-bottom: 12px;
+    color: var(--primary-dark);
+}
+
+.price-stock-row {
+    display: flex;
+    gap: 30px;
+    margin-bottom: 25px;
+}
+
+.price-box {
+    font-size: 22px;
+    font-weight: 600;
+    color: var(--primary-dark);
+}
+
+.stock-box {
+    font-size: 14px;
+    color: #777;
+    display: flex;
+    align-items: center;
+}
+
+.desc-box {
+    margin-top: 15px;
+    margin-bottom: 30px;
+    line-height: 1.7;
+    color: #555;
+}
+
+/* ===============================
+   STATUS SECTION
+=================================*/
+
+.status-row {
+    margin-top: 10px;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.status-label {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--primary-dark);
+}
+
+
+.status-badge {
+    padding: 6px 16px;
+    border-radius: 50px;
+    font-size: 13px;
+    font-weight: 500;
+}
+
+.status-approved {
+    background: #e6f4ea;
+    color: #2e7d32;
+}
+
+.status-pending {
+    background: #fff4e5;
+    color: #b26a00;
+}
+
+.status-rejected {
+    background: #fdecea;
+    color: #c62828;
+}
+
+/* ===============================
+   BUTTON SECTION (NEW STRUCTURE)
+=================================*/
+
+.action-button-row {
+    display: grid;
+    grid-template-columns: 2fr 1fr; /* แก้ไขยาวกว่า ลบสั้นกว่า */
+    gap: 14px;
+    margin-top: 18px;
+}
+
+.edit-product-btn,
+.delete-product-btn {
+    height: 44px;
+    font-size: 14px;
+    font-weight: 600;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: 0.2s ease;
+}
+
+/* EDIT BUTTON */
+
+.edit-product-btn {
+    background: var(--primary-dark);
+    color: white;
+    border: none;
+}
+
+.edit-product-btn:hover {
+    background: #2f2722;
+}
+
+/* DELETE BUTTON (Outlined Style) */
+
+.delete-product-btn {
+    background: transparent;
+    color: var(--red-cancel);
+    border: 1.5px solid var(--red-cancel);
+}
+
+.delete-product-btn:hover {
+    background: var(--red-cancel);
+    color: white;
+}
+
+/* ===============================
+   EDIT MODE
+=================================*/
+
+.input-group {
+    margin-bottom: 18px;
+}
+
+.input-group label {
+    display: block;
+    margin-bottom: 6px;
+    font-size: 14px;
+    color: var(--primary-dark);
+}
+
+.input-group input,
+.input-group textarea {
+    width: 100%;
+    padding: 12px;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+    background: var(--soft-cream);
+    font-size: 14px;
+    transition: 0.2s ease;
+}
+
+.input-group input:focus,
+.input-group textarea:focus {
+    outline: none;
+    border-color: var(--accent-brown);
+    box-shadow: 0 0 0 2px rgba(168,139,118,0.2);
+    background: #fff;
+}
+
+.grid-inputs {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 18px;
+}
+
+.btn-save-large {
+    height: 44px;
+    border-radius: 10px;
+    font-size: 14px;
+}
+
+.btn-cancel-edit {
+    height: 40px;
+    border-radius: 10px;
+    font-size: 14px;
+}
+
+/* ===============================
+   RESPONSIVE
+=================================*/
+
+@media(max-width: 992px){
+
+    .detail-layout {
+        grid-template-columns: 1fr;
+    }
+
+    .main-image-container {
+        height: 380px;
+    }
+
+    .product-detail-card {
+        padding: 30px;
+    }
+
+    .action-button-row {
+        grid-template-columns: 1fr;
+    }
+}
+.delete-confirm-box {
+    position: absolute;
+    right: 0;
+    top: 50px;
+    background: white;
+    padding: 15px;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    width: 250px;
+    display: none;
+    z-index: 100;
+    animation: fadeIn 0.3s ease;
+}
+
+.delete-confirm-box p {
+    font-size: 13px;
+    margin-bottom: 10px;
+}
+
+.delete-confirm-actions {
+    display: flex;
+    justify-content: space-between;
+    gap: 5px;
+}
+
+.delete-confirm-actions button {
+    flex: 1;
+    padding: 6px;
+    border-radius: 6px;
+    border: none;
+    cursor: pointer;
+}
+
+.btn-del-cancel {
+    background: #eee;
+}
+
+.btn-del-confirm {
+    background: #e74c3c;
+    color: white;
+}
+/* ====================================
+   VMARKET ALERT WITH IMAGE ICON
+==================================== */
+
+.vm-popup{
+    border-radius: 22px;
+    padding: 45px 35px 35px 35px;
+    background: #ffffff;
+    box-shadow: 0 25px 60px rgba(62,52,45,0.15);
+    animation: vmFadeIn 0.25s ease;
+    position: relative;
+}
+
+@keyframes vmFadeIn{
+    from{opacity:0; transform:scale(0.96);}
+    to{opacity:1; transform:scale(1);}
+}
+
+/* close button (top right image) */
+
+.vm-close-btn{
+    position:absolute;
+    top:18px;
+    right:18px;
+    background:#f8f6f3;
+    border:none;
+    width:36px;
+    height:36px;
+    border-radius:50%;
+    cursor:pointer;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    transition:0.2s ease;
+}
+
+.vm-close-btn img{
+    width:16px;
+    height:16px;
+}
+
+.vm-close-btn:hover{
+    background:#e9e3dc;
+    transform:rotate(90deg);
+}
+
+/* center red circle */
+
+.vm-icon{
+    width:75px;
+    height:75px;
+    margin:0 auto 18px;
+    border-radius:50%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:#c62828;
+    box-shadow:0 10px 25px rgba(198,40,40,0.25);
+    animation: vmFloat 2s ease-in-out infinite;
+}
+
+.vm-icon img{
+    width:30px;
+    height:30px;
+    filter: brightness(0) invert(1); /* ทำให้รูปเป็นสีขาว */
+}
+
+@keyframes vmFloat{
+    0%{transform:translateY(0);}
+    50%{transform:translateY(-4px);}
+    100%{transform:translateY(0);}
+}
+
+.vm-title{
+    font-size:20px;
+    font-weight:600;
+    color:#3e342d;
+    margin-bottom:8px;
+}
+
+.vm-text{
+    font-size:14px;
+    color:#666;
+    margin-bottom:28px;
+}
+
+/* confirm button */
+
+.vm-btn-danger{
+    background:#c62828;
+    color:#fff;
+    padding:12px 38px;
+    border-radius:50px;
+    font-weight:600;
+    font-size:14px;
+    transition:0.25s ease;
+}
+
+.vm-btn-danger:hover{
+    background:#a32121;
+    transform:translateY(-2px);
+    box-shadow:0 10px 20px rgba(198,40,40,0.3);
+}
+
+.vm-icon.success{
+    background:#2e7d32;
+}
+
+.vm-icon.danger{
+    background:#c62828;
+}
+
+.vm-btn-success{
+    background:#2e7d32;
+    color:#fff;
+    padding:12px 38px;
+    border-radius:50px;
+    font-weight:600;
+    transition:0.25s ease;
+}
+
+.vm-btn-success:hover{
+    background:#256428;
+    transform:translateY(-2px);
+    box-shadow:0 10px 20px rgba(46,125,50,0.3);
+}
+
+.vm-icon img{
+    width: 28px;
+    height: 28px;
+}
+
+.vm-close-btn img{
+    width: 14px;
+    height: 14px;
+}
+
+.vm-toast{
+    border-radius: 14px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.12);
+    border-left: 5px solid #2e7d32;
+    padding: 12px 16px;
+}
+
+
+.vm-toast-error{
+    border-radius: 14px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.12);
+    border-left: 5px solid #b02a37;
+    padding: 12px 16px;
+}

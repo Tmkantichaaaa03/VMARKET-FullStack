@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>วิเคราะห์การขาย - VMARKET</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../seller_panel/css/dashboard.css">
+    <link rel="stylesheet" href="../seller_panel/css/analytics.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        /* สไตล์เพิ่มเติมสำหรับระบบแจ้งเตือนและ Layout */
+        .noti-container {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .noti-link {
+            font-size: 20px;
+            text-decoration: none;
+            position: relative;
+            cursor: pointer;
+            padding: 0 15px;
+        }
+
+        .badge {
+            position: absolute;
+            top: -2px;
+            right: 5px;
+            background-color: #ff4757;
+            color: white;
+            border-radius: 50%;
+            padding: 2px 6px;
+            font-size: 10px;
+            font-family: sans-serif;
+            font-weight: bold;
+            border: 2px solid #fff;
+        }
+
+        .noti-dropdown {
+            display: none; 
+            position: absolute;
+            right: 10px;
+            top: 50px;
+            width: 300px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+            z-index: 1000;
+            border: 1px solid #ddd;
+        }
+
+        .noti-header {
+            padding: 12px;
+            background: #f8f9fa;
+            border-bottom: 1px solid #eee;
+            font-weight: bold;
+            color: #333;
+            border-radius: 8px 8px 0 0;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .noti-list {
+            max-height: 350px;
+            overflow-y: auto;
+        }
+
+        .noti-item {
+            padding: 12px;
+            border-bottom: 1px solid #f1f1f1;
+            cursor: pointer;
+            transition: background 0.2s;
+            text-align: left;
+            display: block;
+            text-decoration: none;
+            color: #333;
+        }
+
+        .noti-item:hover { background-color: #f1f2f6; }
+        .noti-item.unread { background-color: #e3f2fd; }
+        .noti-item strong { display: block; color: #2c3e50; font-size: 14px; }
+        .noti-item p { margin: 5px 0; font-size: 13px; color: #666; }
+        .noti-item small { color: #999; font-size: 11px; }
+
+        .empty-noti { padding: 20px; text-align: center; color: #999; }
+        
+        /* สไตล์สำหรับชื่อร้านใน Navbar */
+        .profile-link {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+            transition: 0.3s ease;
+        }
+
+        .nav-shop-name {
+            font-size: 14px;
+            font-weight: 500;
+            color: #3e342d;
+            max-width: 150px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .profile-link:hover .nav-shop-name {
+            color: #b89a87;
+        }
+
+        .nav-logo-img {
+            height: 120px; 
+            width: auto; 
+            display: block;
+            object-fit: contain;
+            transition: transform 0.3s ease;
+        }
+
+        .nav-logo-img:hover {
+            transform: scale(1.05);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+        }
+    </style>
+
+</head>
+<body>
+
+<div id="navbar"></div>
+
+<div class="main-container">
+    <div class="container-fluid py-4">
+        
+        <div class="d-sm-flex align-items-center justify-content-between mb-4">
+            <h1 class="h4 mb-0 text-gray-800 fw-bold">สรุปภาพรวมการขาย: <span id="shopNameDisplay">...</span></h1>
+            <div class="d-flex gap-2">
+                <button onclick="fetchAnalyticsData()" class="btn btn-sm btn-primary shadow-sm">
+                    รีเฟรชข้อมูล
+                </button>
+                <select id="timeRange" class="form-select form-select-sm shadow-sm" style="width: 150px;" onchange="fetchAnalyticsData()">
+                    <option value="today">วันนี้</option>
+                    <option value="7days" selected>7 วันล่าสุด</option>
+                    <option value="30days">30 วันล่าสุด</option>
+                    <option value="1year">1 ปีที่ผ่านมา</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="row mb-4">
+            <div class="col-xl-3 col-md-6 mb-4">
+                <div class="card stat-card h-100 py-2">
+                    <div class="card-body">
+                        <div class="row align-items-center">
+                            <div class="col">
+                                <div class="text-xs font-weight-bold text-uppercase mb-1">ยอดขายสะสม</div>
+                                <div class="h5 mb-0 fw-bold" id="todaySales">฿0.00</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-3 col-md-6 mb-4">
+                <div class="card order-card h-100 py-2">
+                    <div class="card-body">
+                        <div class="row align-items-center">
+                            <div class="col">
+                                <div class="text-xs font-weight-bold text-uppercase mb-1">ออเดอร์ทั้งหมด</div>
+                                <div class="h5 mb-0 fw-bold" id="totalOrders">0</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row g-4 align-items-stretch"> 
+            <div class="col-xl-8 col-lg-7 d-flex flex-column">
+                <div class="card h-100"> 
+                    <div class="card-header py-3 bg-white border-0">
+                        <h6 class="m-0 font-weight-bold" id="chartTitle">สถิติยอดขาย</h6>
+                    </div>
+                    <div class="card-body d-flex flex-column">
+                        <div id="chartLoading" class="text-center py-5" style="display:none;">
+                            <div class="spinner-border text-primary" role="status"></div>
+                        </div>
+                        <div class="chart-container" style="position: relative; flex-grow: 1; min-height: 380px;">
+                            <canvas id="salesTrendChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-xl-4 col-lg-5 d-flex flex-column">
+                <div class="card h-100"> 
+                    <div class="card-header py-3 bg-white border-0">
+                        <h6 class="m-0 font-weight-bold">5 อันดับสินค้าขายดี</h6>
+                    </div>
+                    <div class="card-body d-flex flex-column">
+                        <div id="topProductsList" style="flex-grow: 1;">
+                            <p class="text-center text-muted">กำลังโหลด...</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+fetch("navbar.html")
+  .then(res => res.text())
+  .then(async data => {
+    document.getElementById("navbar").innerHTML = data;
+
+    // active menu
+    const currentPage = location.pathname.split("/").pop();
+    document.querySelectorAll(".nav-center a").forEach(link => {
+        if (link.getAttribute("href") === currentPage) {
+            link.classList.add("active");
+        }
+    });
+
+    // โหลดข้อมูลที่ต้องใช้ navbar
+    if (typeof displayShopName === "function") {
+        await displayShopName();
+    }
+
+    if (typeof fetchNotifications === "function") {
+        fetchNotifications();
+        setInterval(fetchNotifications, 60000);
+    }
+  });
+</script>
+    <script src="js/auth.js"></script>
+    <script src="js/main.js"></script>
+
+    
+    </body>
+</html>

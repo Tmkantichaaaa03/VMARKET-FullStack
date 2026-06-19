@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>รายละเอียดสินค้า - VMARKET</title>
+
+    <link rel="stylesheet" href="../seller_panel/css/dashboard.css">
+    <link rel="stylesheet" href="../seller_panel/css/product_detail.css">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+
+<body>
+
+    <nav class="top-menu">
+        <div class="nav-container">
+            <div class="nav-left"><div class="logo">SELLER PANEL</div></div>
+            <div class="nav-center">
+                <a href="dashboard.html" class="active">จัดการสินค้า</a>
+                <a href="orders.html">จัดการคำสั่งซื้อ</a>
+                <a href="analytics.html">วิเคราะห์การขาย</a>
+            </div>
+            <div class="nav-right">
+                <a href="shop_profile.html" class="profile-link">
+                    <div class="icon-btn"><img src="assets/images/person.png"></div>
+                    <span id="navShopName" class="nav-shop-name">กำลังโหลด...</span>
+                </a>
+                <a href="#" onclick="logout()" class="icon-btn logout-btn">
+                    <img src="assets/images/logout.png">
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <main class="content">
+        <div class="container wide">
+
+            <div class="product-detail-card">
+                <div class="detail-layout">
+
+                    <!-- IMAGE SECTION -->
+                    <div class="image-section">
+                        <div class="main-image-container">
+                            <img id="productImage" src="assets/images/no-image.jpg">
+                        </div>
+                        <div id="imageGallery" class="image-gallery"></div>
+                    </div>
+
+                    <!-- INFO SECTION -->
+                    <div class="info-section">
+
+                        <!-- VIEW MODE -->
+                        <div id="viewMode">
+
+                            <h1 id="viewName" class="prod-name-title">-</h1>
+
+                            <span class="product-id-tag" style="display:none;">
+                                ID: <span id="displayProductId">-</span>
+                            </span>
+
+                            <div class="price-stock-row">
+                                <div class="price-box">
+                                    ฿ <span id="viewPrice">0.00</span>
+                                </div>
+                                <div class="stock-box">
+                                    คลัง: <span id="viewStock">0</span> ชิ้น
+                                </div>
+                            </div>
+
+                            <div class="desc-box">
+                                <strong>รายละเอียดสินค้า</strong>
+                                <p id="viewDescription">-</p>
+                            </div>
+
+                            <div class="status-row">
+                                <span class="status-label">สถานะสินค้า:</span>
+                                <span id="detailApprovalStatus" class="status-badge">
+                                    กำลังโหลด...
+                                </span>
+                            </div>
+
+                            <div class="action-button-row">
+
+                                <button id="editBtnBottom"
+                                        class="edit-product-btn"
+                                        onclick="toggleEditMode(true)">
+                                    แก้ไขสินค้า
+                                </button>
+
+                                <button id="deleteBtn"
+                                        class="delete-product-btn"
+                                        onclick="confirmDeleteProduct()">
+                                    ลบสินค้า
+                                </button>
+
+                            </div>
+
+                        </div>
+
+                        <!-- EDIT MODE -->
+                        <form id="editProductForm" style="display:none;">
+                            <div class="input-group">
+                                <label>ชื่อสินค้า</label>
+                                <input type="text" id="editName" required>
+                            </div>
+
+                            <div class="grid-inputs">
+                                <div class="input-group">
+                                    <label>ราคา (บาท)</label>
+                                    <input type="number" id="editPrice" step="0.01" required>
+                                </div>
+                                <div class="input-group">
+                                    <label>สินค้าคงเหลือ</label>
+                                    <input type="number" id="editStock" required>
+                                </div>
+                            </div>
+
+                            <div class="input-group">
+                                <label>รายละเอียดสินค้า</label>
+                                <textarea id="editDescription" rows="6"></textarea>
+                            </div>
+
+                            <button type="submit" class="button btn-save-large">
+                                บันทึกข้อมูลสินค้า
+                            </button>
+
+                            <button type="button"
+                                    class="button btn-cancel-edit"
+                                    onclick="toggleEditMode(false)">
+                                ยกเลิก
+                            </button>
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <script src="js/auth.js"></script>
+    <script src="js/main.js"></script>
+
+<script>
+
+window.onload = async function() {
+    if (typeof checkAuth === "function") checkAuth();
+    if (typeof displayShopName === "function") await displayShopName();
+    loadProductDetail();
+};
+
+function ensureCoverImageAlwaysExists(){
+
+    const mainImage = document.getElementById("productImage");
+    const gallery = document.getElementById("imageGallery");
+
+    if(!mainImage || !gallery) return;
+
+    const coverSrc = mainImage.src;
+
+    // ลบ active เก่า
+    document.querySelectorAll(".thumb-img").forEach(img=>{
+        img.classList.remove("active-thumb");
+    });
+
+    // เช็คว่ามี cover อยู่ไหม
+    const exists = Array.from(gallery.querySelectorAll("img"))
+        .some(img => img.src === coverSrc);
+
+    if(!exists){
+        const coverThumb = document.createElement("img");
+        coverThumb.src = coverSrc;
+        coverThumb.className = "thumb-img active-thumb";
+        gallery.prepend(coverThumb);
+    }else{
+        // ถ้ามีอยู่แล้วให้ active มัน
+        const found = Array.from(gallery.querySelectorAll("img"))
+            .find(img => img.src === coverSrc);
+        if(found) found.classList.add("active-thumb");
+    }
+}
+
+document.addEventListener("click", function(e){
+
+    if(e.target.classList.contains("thumb-img")){
+
+        const mainImage = document.getElementById("productImage");
+        mainImage.src = e.target.src;
+
+        document.querySelectorAll(".thumb-img").forEach(img=>{
+            img.classList.remove("active-thumb");
+        });
+
+        e.target.classList.add("active-thumb");
+    }
+});
+
+function confirmDeleteProduct(){
+
+    const productId = document.getElementById('displayProductId')?.textContent;
+
+    Swal.fire({
+        html: `
+            <div class="vm-alert">
+                <button class="vm-close-btn" onclick="Swal.close()">
+                    <img src="assets/images/cancel.png">
+                </button>
+
+                <div class="vm-icon danger">
+                    <img src="assets/images/cancel.png">
+                </div>
+
+                <h2 class="vm-title">ยืนยันการลบสินค้า</h2>
+                <p class="vm-text">การลบข้อมูลจะไม่สามารถกู้คืนได้</p>
+            </div>
+        `,
+        showConfirmButton: true,
+        confirmButtonText: 'ลบสินค้า',
+        customClass: {
+            popup: 'vm-popup',
+            confirmButton: 'vm-btn-danger'
+        },
+        buttonsStyling: false,
+        backdrop: 'rgba(62,52,45,0.35)'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            deleteProduct(productId);
+        }
+    });
+}
+
+
+
+function showVmarketAlert(type, title, text){
+
+    let iconHtml = '';
+    let buttonClass = '';
+
+    if(type === 'success'){
+        iconHtml = `
+            <div class="vm-icon success">
+                <i class="fa-solid fa-check"></i>
+            </div>
+        `;
+        buttonClass = 'vm-btn-success';
+    }
+
+    if(type === 'danger'){
+        iconHtml = `
+            <div class="vm-icon danger">
+                <i class="fa-solid fa-xmark"></i>
+            </div>
+        `;
+        buttonClass = 'vm-btn-danger';
+    }
+
+    Swal.fire({
+        html: `
+            <div class="vm-alert">
+
+                <button class="vm-close-btn" onclick="Swal.close()">
+                    <img src="assets/images/logout.png">
+                </button>
+
+                ${iconHtml}
+
+                <h2 class="vm-title">${title}</h2>
+                <p class="vm-text">${text}</p>
+
+            </div>
+        `,
+        showConfirmButton: true,
+        confirmButtonText: 'ตกลง',
+        customClass: {
+            popup: 'vm-popup',
+            confirmButton: buttonClass
+        },
+        buttonsStyling: false,
+        backdrop: 'rgba(62,52,45,0.35)'
+    });
+}
+
+async function deleteProduct(productId) {
+
+    productId = productId?.trim();
+
+    if (!productId) {
+        console.log("ไม่มี product id");
+        return;
+    }
+
+    try {
+
+        const response = await fetch(`${BASE_API_URL}products/delete_product.php`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ product_id: productId })
+        });
+
+        const result = await response.json();
+        console.log(result);
+
+        if (result.success) {
+
+            Swal.fire({
+                toast: true,
+                position: 'top-end',
+                title: 'ลบสินค้าเรียบร้อยแล้ว',
+                icon: 'success',
+                showConfirmButton: false,
+                timer: 1500
+            }).then(() => {
+                window.location.href = "dashboard.html";
+            });
+
+        } else {
+
+            Swal.fire({
+                icon: 'error',
+                title: 'ลบไม่สำเร็จ',
+                text: result.message || 'เกิดข้อผิดพลาด'
+            });
+
+        }
+
+    } catch (error) {
+        console.error(error);
+
+        Swal.fire({
+            icon: 'error',
+            title: 'เกิดข้อผิดพลาด',
+            text: 'ไม่สามารถเชื่อมต่อเซิร์ฟเวอร์'
+        });
+    }
+}
+</script>
+
+</body>
+</html>

@@ -1,0 +1,214 @@
+/* ===== Reset & Layout ===== */
+@import url('https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700&display=swap');
+
+body {
+    background: radial-gradient(circle at top right, #fdfbf9, #efeae6);
+    font-family: 'Prompt', sans-serif;
+    transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    color: #3e342d;
+    margin: 0;
+    min-height: 100vh;
+}
+
+/* ===== จำกัดความกว้างหน้าจอ ===== */
+.main-container {
+    max-width: 1150px; /* เปลี่ยนจาก 1320px เป็น 100% */
+    margin: 80px auto 0 auto; /* เผื่อที่ให้ Navbar ด้านบนด้วย */
+    padding: 0 40px;
+}
+
+/* ===== Glass Card Core ===== */
+.card {
+    border: 1px solid rgba(255, 255, 255, 0.6);
+    border-radius: 24px;
+    background: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(20px);
+    box-shadow: 0 15px 35px rgba(62, 52, 45, 0.05), 
+                0 5px 15px rgba(0, 0, 0, 0.03);
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    overflow: hidden;
+}
+
+.card:hover {
+    transform: translateY(-8px) scale(1.01);
+    box-shadow: 0 25px 45px rgba(62, 52, 45, 0.12);
+    border: 1px solid rgba(184, 154, 135, 0.3);
+}
+
+/* ===== KPI Gradient Cards (มีมิติเพิ่มขึ้นด้วย Overlay) ===== */
+.stat-card, .order-card {
+    position: relative;
+    z-index: 1;
+}
+
+.stat-card::before, .order-card::before {
+    content: "";
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(255,255,255,0.2) 0%, transparent 70%);
+    z-index: -1;
+    transition: 0.6s;
+}
+
+.stat-card:hover::before, .order-card:hover::before {
+    top: -20%;
+    left: -20%;
+}
+
+.stat-card {
+    background: linear-gradient(135deg, #d6b8a5 0%, #b89a87 100%);
+}
+
+.order-card {
+    background: linear-gradient(135deg, #dfc298 0%, #d1a056 100%);
+}
+
+/* บังคับตัวหนังสือใน KPI */
+.stat-card *, .order-card * {
+    color: #2c241e !important;
+    text-shadow: 0 1px 1px rgba(255,255,255,0.2);
+}
+
+/* ===== KPI Number Style ===== */
+.h5 {
+    font-size: 1.8rem;
+    letter-spacing: -0.5px;
+    margin-top: 5px;
+}
+
+.text-xs {
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-size: 0.75rem;
+    opacity: 0.8;
+}
+
+/* ===== Chart Section ===== */
+.chart-container {
+    padding: 10px;
+    border-radius: 15px;
+    background: rgba(255, 255, 255, 0.3);
+}
+
+/* ===== Top Products List (ลูกเล่นตอน Hover) ===== */
+#topProductsList .d-flex {
+    padding: 15px 12px;
+    margin: 5px 0;
+    border-radius: 12px;
+    border-bottom: none !important; /* ลบเส้นใต้แบบเก่า */
+    transition: 0.3s;
+}
+
+#topProductsList .d-flex:hover {
+    background: rgba(184, 154, 135, 0.1);
+    padding-left: 20px;
+}
+
+#topProductsList div .text-primary {
+    color: #8d6e63 !important; /* ปรับสีฟ้าเดิมให้เข้ากับธีมน้ำตาลเข้ม */
+}
+
+/* ===== Scrollbar แต่งสวย ===== */
+::-webkit-scrollbar {
+    width: 8px;
+}
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+::-webkit-scrollbar-thumb {
+    background: #d6b8a5;
+    border-radius: 10px;
+}
+::-webkit-scrollbar-thumb:hover {
+    background: #b89a87;
+}
+
+/* ===== Dropdown & Select Styling ===== */
+.form-select-sm {
+    border-radius: 10px;
+    border: 1px solid #d6b8a5;
+    padding: 5px 15px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.form-select-sm:focus {
+    box-shadow: 0 0 0 3px rgba(184, 154, 135, 0.2);
+    border-color: #b89a87;
+}
+
+/* ===== Button Refresh Styling ===== */
+.btn-primary {
+    background: #3e342d;
+    border: none;
+    border-radius: 10px;
+    padding: 6px 16px;
+    transition: 0.3s;
+}
+
+.btn-primary:hover {
+    background: #5d4e44;
+    transform: scale(1.05);
+    box-shadow: 0 5px 15px rgba(62, 52, 45, 0.2);
+}
+
+/* ===== Dark Mode ปรับปรุง ===== */
+body.dark-mode {
+    background: #1a1a1a;
+}
+
+body.dark-mode .card {
+    background: rgba(40, 40, 40, 0.8);
+    border: 1px solid rgba(255,255,255,0.05);
+}
+
+body.dark-mode .card-header {
+    color: #fff !important;
+}
+
+body.dark-mode #topProductsList .small.fw-bold {
+    color: #eee !important;
+}
+
+/* ===== Responsive ===== */
+@media (max-width: 768px) {
+    .main-container {
+        margin: 20px auto;
+        padding: 0 15px;
+    }
+    
+    .h5 {
+        font-size: 1.5rem;
+    }
+}
+/* เปลี่ยนสีหัวข้อกราฟ */
+#chartTitle {
+    color: #3e342d !important; /* ใส่รหัสสีที่ต้องการตรงนี้ */
+}
+
+/* เปลี่ยนสีหัวข้อสินค้าขายดี */
+.col-xl-4 .card-header h6 {
+    color: #3e342d !important; /* ใส่รหัสสีที่ต้องการตรงนี้ */
+}
+
+/* บังคับให้ Row ใน Main Container ขยายกว้างเต็มที่ */
+.main-container .container-fluid {
+    max-width: 100%;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+/* ทำให้ Card Body ยืดหยุ่นเพื่อรองรับความสูงที่เท่ากัน */
+.card-body {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+/* จัดการรายการสินค้าให้ดูพอดีกับความสูงกราฟ */
+#topProductsList {
+    overflow-y: auto; /* ถ้าสินค้าเยอะให้ Scroll ภายในได้ */
+}
