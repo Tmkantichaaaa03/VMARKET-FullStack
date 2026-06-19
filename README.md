@@ -48,8 +48,6 @@ Web Application
 
 ```
 
-
-
 \## Components
 
 
