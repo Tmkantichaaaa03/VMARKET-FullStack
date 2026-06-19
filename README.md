@@ -20,33 +20,35 @@ Virtual Marketplace Game
 
 
 
-```text
+ระบบทำงานร่วมกันระหว่าง:
 
-Godot Game Client
 
-&#x20;       |
 
-&#x20;       | REST API
+1\. Game Client (Godot Engine)
 
-&#x20;       |
+&#x20;  - ใช้สำหรับลูกค้าเดินเลือกชมสินค้าในโลกเสมือน
 
-&#x20;  Backend API
 
-&#x20;       |
 
-&#x20;       |
+2\. Backend API
 
-&#x20;MySQL Database
+&#x20;  - รับส่งข้อมูลระหว่างเกม เว็บไซต์ และฐานข้อมูล
 
-&#x20;       |
+&#x20;  - จัดการผู้ใช้ สินค้า และคำสั่งซื้อ
 
-&#x20;       |
 
-Web Application
 
-&#x20;(Seller/Admin)
+3\. MySQL Database
 
-```
+&#x20;  - จัดเก็บข้อมูลระบบ
+
+
+
+4\. Web Application
+
+&#x20;  - สำหรับ Seller และ Admin
+
+
 
 \## Components
 
@@ -182,12 +184,15 @@ docs/Poster/Gamified\_Online\_Marketplace\_Poster.pdf
 
 Web/API:
 
-https://github.com/Tmkantichaaaa03/VMARKET-FullStack
+
+
+\[VMARKET Full Stack](https://github.com/Tmkantichaaaa03/VMARKET-FullStack)
 
 
 
 Game Client:
 
-https://github.com/Tmkantichaaaa03/vmarket\_game
 
+
+\[VMARKET Game Client](https://github.com/Tmkantichaaaa03/vmarket\_game)
 
