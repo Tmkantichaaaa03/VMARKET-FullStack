@@ -180,11 +180,7 @@ docs/Poster/Gamified\_Online\_Marketplace\_Poster.pdf
 
 ## GitHub
 
-Web/API:
-
 [Web/API](https://github.com/Tmkantichaaaa03/VMARKET-FullStack)
-
-Game Client:
 
 [Game Client](https://github.com/Tmkantichaaaa03/vmarket_game)
 
