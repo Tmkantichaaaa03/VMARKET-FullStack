@@ -16,6 +16,40 @@ Virtual Marketplace Game
 
 
 
+\## System Architecture
+
+
+
+```text
+
+Godot Game Client
+
+&#x20;       |
+
+&#x20;       | REST API
+
+&#x20;       |
+
+&#x20;  Backend API
+
+&#x20;       |
+
+&#x20;       |
+
+&#x20;MySQL Database
+
+&#x20;       |
+
+&#x20;       |
+
+Web Application
+
+&#x20;(Seller/Admin)
+
+```
+
+
+
 \## Components
 
 
@@ -114,9 +148,48 @@ Admin:
 
 
 
-Import:
+Import: virtual\_marketplace.sql
 
 
 
-virtual\_marketplace.sql
+Database Name: virtual\_marketplace
+
+
+
+\## Documentation
+
+
+
+Report:
+
+docs/Report/Gamified\_Online\_Marketplace\_Report.pdf
+
+
+
+Paper:
+
+docs/Paper/Gamified\_Online\_Marketplace\_Paper.pdf
+
+
+
+Poster:
+
+docs/Poster/Gamified\_Online\_Marketplace\_Poster.pdf
+
+
+
+\## GitHub
+
+
+
+Web/API:
+
+https://github.com/Tmkantichaaaa03/VMARKET-FullStack
+
+
+
+Game Client:
+
+https://github.com/Tmkantichaaaa03/vmarket\_game
+
 
